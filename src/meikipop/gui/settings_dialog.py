@@ -80,12 +80,6 @@ class SettingsDialog(QDialog):
         self._set_expanding(self.hotkey_combo)
         core_layout.addRow("Hotkey:", self.hotkey_combo)
 
-        self.translate_hotkey_edit = QLineEdit(config.translate_hotkey)
-        self.translate_hotkey_edit.setToolTip(
-            "Translates the sentence under the mouse (Google Translate) and shows it in the popup\n"
-            "Examples: alt+t, ctrl+shift+t, f9")
-        core_layout.addRow("Translate Sentence Hotkey:", self.translate_hotkey_edit)
-
         self.ocr_provider_combo = QComboBox()
         self.ocr_provider_combo.addItems(self.ocr_processor.available_providers.keys())
         self.ocr_provider_combo.setCurrentText(config.ocr_provider)
@@ -180,6 +174,24 @@ class SettingsDialog(QDialog):
 
         behavior_group.setLayout(behavior_layout)
         self.tab_general_layout.addWidget(behavior_group)
+
+        # --- Group 4: Sentence Translation ---
+        translate_group = QGroupBox("Sentence Translation")
+        translate_layout = QFormLayout()
+        self.form_layouts.append(translate_layout)
+
+        self.translate_hotkey_combo = QComboBox()
+        self.translate_hotkey_combo.setEditable(True)  # presets, but any combo like f9 can still be typed
+        self.translate_hotkey_combo.addItems(['alt+t', 'shift+alt+t', 'ctrl+alt+t', 'ctrl+shift+alt+t'])
+        self.translate_hotkey_combo.setCurrentText(config.translate_hotkey)
+        self.translate_hotkey_combo.setToolTip(
+            "Translates the sentence under the mouse (Google Translate) and shows it in the popup\n"
+            "Pick one or type your own, e.g. f9")
+        self._set_expanding(self.translate_hotkey_combo)
+        translate_layout.addRow("Hotkey:", self.translate_hotkey_combo)
+
+        translate_group.setLayout(translate_layout)
+        self.tab_general_layout.addWidget(translate_group)
         self.tab_general_layout.addStretch()
 
         # ==========================================
@@ -509,7 +521,7 @@ class SettingsDialog(QDialog):
 
         # Update all other config values
         config.hotkey = self.hotkey_combo.currentText()
-        config.translate_hotkey = self.translate_hotkey_edit.text().strip().lower() or 'alt+t'
+        config.translate_hotkey = self.translate_hotkey_combo.currentText().strip().lower() or 'alt+t'
         config.glens_low_bandwidth = self.glens_compression_check.isChecked()
         config.max_lookup_length = self.max_lookup_spin.value()
         config.auto_scan_mode = self.auto_scan_check.isChecked()
@@ -538,7 +550,7 @@ class SettingsDialog(QDialog):
         config.font_size_definitions = self.font_size_def_spin.value()
         config.anki_hotkey = self.anki_hotkey_edit.text().strip().lower() or 'alt+a'
         config.anki_select_hotkey = self.anki_select_hotkey_edit.text().strip().lower() or 'alt+s'
-        config.anki_deck = self.anki_deck_combo.currentText().strip() or 'meikipop'
+        config.anki_deck = self.anki_deck_combo.currentText().strip() or 'ankipop'
         config.anki_audio = self.anki_audio_check.isChecked()
         config.anki_all_meanings = self.anki_all_meanings_check.isChecked()
         config.anki_frequency = self.anki_frequency_check.isChecked()

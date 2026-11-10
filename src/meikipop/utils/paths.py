@@ -1,18 +1,35 @@
+import logging
 import os
+import shutil
 import sys
 from platformdirs import PlatformDirs
 
 
+def copy_if_missing(old_dir: str, new_dir: str) -> None:
+    """Starts a new ankipop folder from an existing meikipop one, so settings and the dictionary carry over.
+    Copies rather than moves, so meikipop itself keeps working."""
+    if old_dir == new_dir or not os.path.isdir(old_dir) or os.path.exists(new_dir):
+        return
+    try:
+        shutil.copytree(old_dir, new_dir)
+    except OSError as e:
+        shutil.rmtree(new_dir, ignore_errors=True)  # a half-copied dictionary is worse than downloading a fresh one
+        logging.getLogger(__name__).warning(f"Could not copy settings from {old_dir}: {e}")
+
+
 class MeikiPaths:
     """Centralized path resolution for meikipop."""
-    
+
     _instance = None
-    
+
     def __new__(cls):
         if cls._instance is None:
             # Create the platformdirs instance as a composited object
             cls._instance = object.__new__(cls)
-            cls._instance._platform_dirs = PlatformDirs("meikipop", appauthor=False, ensure_exists=True)
+            old, new = PlatformDirs("meikipop", appauthor=False), PlatformDirs("ankipop", appauthor=False)
+            copy_if_missing(old.user_config_dir, new.user_config_dir)
+            copy_if_missing(old.user_data_dir, new.user_data_dir)  # same folder as config on windows/macos: skipped
+            cls._instance._platform_dirs = PlatformDirs("ankipop", appauthor=False, ensure_exists=True)
         return cls._instance
 
     @property

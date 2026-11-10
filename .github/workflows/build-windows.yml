@@ -32,7 +32,7 @@ jobs:
           rmdir dist -r -force -ErrorAction SilentlyContinue || true
 
       - name: build with pyinstaller (windows)
-        run: pyinstaller meikipop.win.x64.spec
+        run: pyinstaller ankipop.win.x64.spec
 
       - name: build windows archive
         run: powershell -Command "Compress-Archive -Path dist/ankipop.exe -DestinationPath dist/ankipop.windows.x64.zip"
