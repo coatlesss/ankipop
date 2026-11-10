@@ -57,11 +57,11 @@ jobs:
         run: xvfb-run pyinstaller meikipop.linux.x64.spec
 
       - name: build linux archive
-        run: tar -czvf dist/meikipop.linux.x64.tar.gz -C dist/ meikipop
+        run: tar -czvf dist/ankipop.linux.x64.tar.gz -C dist/ ankipop
 
       - name: upload linux artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: meikipop-linux-x64
-          path: dist/meikipop.linux.x64.tar.gz
+          name: ankipop-linux-x64
+          path: dist/ankipop.linux.x64.tar.gz

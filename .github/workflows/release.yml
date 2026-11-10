@@ -7,12 +7,16 @@ on:
       - 'v*'
 
 jobs:
-  # shortcut: windows only, the fork is untested on linux/macos; add their builds back once tested
+  # shortcut: no flatpak, its manifest still uses upstream's app id (com.github.rtr46.meikipop); rename it before adding build-flatpak back
   build-windows:
     uses: ./.github/workflows/build-windows.yml
+  build-linux:
+    uses: ./.github/workflows/build-linux.yml
+  build-macos:
+    uses: ./.github/workflows/build-macos.yml
 
   release:
-    needs: [ build-windows ]
+    needs: [ build-windows, build-linux, build-macos ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -30,3 +34,5 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-rc') }}
           files: |
             artifacts/*/*.zip
+            artifacts/*/*.tar.gz
+            artifacts/*/*.dmg

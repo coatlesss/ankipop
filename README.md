@@ -2,7 +2,7 @@
 
 ankipop is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
 
-**[download for windows](https://github.com/coatlesss/ankipop/releases/latest)** · [what this fork adds](#what-this-fork-adds) · [setting up anki](#setting-up-anki)
+**[download](https://github.com/coatlesss/ankipop/releases/latest)** (windows, macos, linux) · [what this fork adds](#what-this-fork-adds) · [setting up anki](#setting-up-anki)
 
 https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
@@ -58,14 +58,18 @@ a few things to keep in mind:
 
 ## installation
 
-### download (windows)
+### download
 
-1. download `ankipop.windows.x64.zip` from the [latest release](https://github.com/coatlesss/ankipop/releases/latest).
-2. unzip it and run `ankipop.exe`. no python needed.
+get the file for your system from the [latest release](https://github.com/coatlesss/ankipop/releases/latest). no python needed.
 
-the first start downloads a dictionary and ocr models, so it takes a minute. the .exe isn't signed, so windows smartscreen may warn you; click *more info > run anyway*.
+* **windows:** `ankipop.windows.x64.zip`. unzip it and run `ankipop.exe`.
+* **macos (apple silicon):** `ankipop.macos.arm64.dmg`. open it and drag ankipop into applications.
+* **linux (x11):** `ankipop.linux.x64.tar.gz`. extract it and run `./ankipop`.
 
-there are no linux or macos downloads yet; run from source there.
+the first start downloads a dictionary and ocr models, so it takes a minute. the downloads aren't signed:
+
+* on windows, smartscreen may warn you; click *more info > run anyway*.
+* on macos, the first launch is blocked; go to *system settings > privacy & security* and click *open anyway*. then give ankipop the permissions listed under [platform support](#platform-support).
 
 ### run from source
 
@@ -110,7 +114,7 @@ see for platform specific setup details:
 <summary>macos</summary>
 
 * go to **System Preferences** > **Security & Privacy** > **Privacy**
-* add/enable your terminal app in **Input Monitoring**, **Screen Recording** and **Accessibility**
+* add/enable ankipop (or your terminal app, if you run from source) in **Input Monitoring**, **Screen Recording** and **Accessibility**
 
 note that there may be problems when using python 3.14. use one of [these workarounds](https://github.com/rtr46/meikipop/issues/43) if necessary.
 </details>
