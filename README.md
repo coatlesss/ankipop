@@ -2,6 +2,8 @@
 
 ankipop is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
 
+**[download for windows](https://github.com/coatlesss/ankipop/releases/latest)** · [what this fork adds](#what-this-fork-adds) · [setting up anki](#setting-up-anki)
+
 https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
 > ankipop is a modified version of [meikipop](https://github.com/rtr46/meikipop) by rtr46, based on meikipop 2.0.6 and changed starting november 2026. the changes are listed under [what this fork adds](#what-this-fork-adds).
@@ -56,7 +58,14 @@ a few things to keep in mind:
 
 ## installation
 
-there are no prebuilt downloads for ankipop yet, so you run it from source or build the .exe yourself. note that when ankipop is started for the first time, a dictionary and ocr models may be downloaded.
+### download (windows)
+
+1. download `ankipop.windows.x64.zip` from the [latest release](https://github.com/coatlesss/ankipop/releases/latest).
+2. unzip it and run `ankipop.exe`. no python needed.
+
+the first start downloads a dictionary and ocr models, so it takes a minute. the .exe isn't signed, so windows smartscreen may warn you; click *more info > run anyway*.
+
+there are no linux or macos downloads yet; run from source there.
 
 ### run from source
 
@@ -84,7 +93,7 @@ pip install pyinstaller
 pyinstaller --noconfirm meikipop.win.x64.spec
 ```
 
-the result is `distnkipop.exe`, a single file you can copy to any windows pc. quit a running meikipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
+the result is `dist\ankipop.exe`, a single file you can copy to any windows pc. quit a running ankipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
 
 ### just want the original meikipop?
 
