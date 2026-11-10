@@ -32,7 +32,7 @@ jobs:
         run: rm -rf build dist || true
 
       - name: build with pyinstaller (macos)
-        run: pyinstaller meikipop.macos.spec
+        run: pyinstaller ankipop.macos.spec
 
       - name: create dmg
         run: |

@@ -8,8 +8,8 @@ from meikipop.utils.paths import paths
 
 logger = logging.getLogger(__name__)
 
-APP_NAME = "meikipop"
-APP_VERSION = "1.0.0"
+APP_NAME = "ankipop"
+APP_VERSION = "1.2.0"
 MAX_DICT_ENTRIES = 10
 IS_LINUX = sys.platform.startswith('linux')
 IS_WINDOWS = sys.platform.startswith('win')
@@ -66,7 +66,7 @@ class Config:
         'Anki': {
             'anki_hotkey': 'alt+a',
             'anki_select_hotkey': 'alt+s',
-            'anki_deck': 'meikipop',
+            'anki_deck': 'ankipop',
             'anki_audio': True,
             'anki_all_meanings': False,
             'anki_frequency': False,

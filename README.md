@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 * **furigana on the sentence (optional):** readings over the kanji of the on-screen sentence, except the word you're learning, so the card still tests it.
 * **pick the right entry:** `alt+s` steps through the popup's entries (marked with ▶) and `alt+a` adds the marked one. without a pick, every reading of the word goes on one card (e.g. 角: かど・かく・つの・すみ).
 * **see what you already know:** words that already have a note in anki get a ✓ in the popup. this checks the first field of every note type, so cards made with other tools (e.g. lapis) count too.
-* **no setup in anki:** the first card creates a `meikipop` note type and the deck you chose. adding a word that's already in anki is caught, and every result shows up as a notification.
+* **no setup in anki:** the first card creates an `ankipop` note type and the deck you chose. adding a word that's already in anki is caught, and every result shows up as a notification.
 
 ### sentence translation
 
@@ -52,7 +52,7 @@ meikipop is heavily inspired by the philosophy of [Nazeka](https://github.com/wa
 
 a few things to keep in mind:
 
-*   **anki support is deliberately simple.** one hotkey, one card layout. cards always use the `meikipop` note type; mapping onto your own note types isn't supported.
+*   **anki support is deliberately simple.** one hotkey, one card layout. cards always use the `ankipop` note type; mapping onto your own note types isn't supported.
 *   **it is not a multi-dictionary tool.** while meikipop lets you import yomitan dictionaries, it is designed to run best with a single, semi-custom jmdict+kanjidic dictionary.
 *   **the new features are tested on windows.** the hotkeys use pynput and should work on linux (x11) and macos, but haven't been tried there.
 
@@ -81,7 +81,7 @@ cd ankipop
 python -m venv .venv
 .venv\Scripts\activate        # windows; on linux/macos: source .venv/bin/activate
 pip install -e .
-meikipop                      # run the application
+ankipop                       # run the application
 ```
 
 if windows powershell says *running scripts is disabled on this system* when activating, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and try again.
@@ -94,7 +94,7 @@ with the environment above activated:
 
 ```bash
 pip install pyinstaller
-pyinstaller --noconfirm meikipop.win.x64.spec
+pyinstaller --noconfirm ankipop.win.x64.spec
 ```
 
 the result is `dist\ankipop.exe`, a single file you can copy to any windows pc. quit a running ankipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
@@ -122,7 +122,7 @@ note that there may be problems when using python 3.14. use one of [these workar
 <details>
 <summary>wayland (alpha)</summary>
 
-it is possible to run meikipop on wayland in principle, but depending on your specific setup you may need to take additional steps like installing additional dependencies, fixing some of the wayland specific code or changing some of your setup. since the wayland eco system is terribly fragmented and deliberately prevents apps like meikipop from working natively, don't expect any support, but feel free to open an issue regardless.
+it is possible to run ankipop on wayland in principle, but depending on your specific setup you may need to take additional steps like installing additional dependencies, fixing some of the wayland specific code or changing some of your setup. since the wayland eco system is terribly fragmented and deliberately prevents apps like meikipop from working natively, don't expect any support, but feel free to open an issue regardless.
 
 here are some tips and recommendations:
 * consider switching to x11
@@ -133,13 +133,13 @@ here are some tips and recommendations:
 * you may need to install additional os dependencies, depending on your distribution like:
   * fedora: `sudo dnf install libxcb xcb-util xcb-util-cursor libxkbcommon-x11 libxkbcommon xcb-util-wm xcb-util-keysyms pipewire-gstreamer`
   * ubuntu: `sudo apt install cmake libcairo2-dev libgirepository-2.0-dev libgstreamer1.0-dev gstreamer1.0-pipewire libxcb-xkb-dev libxcb-cursor-dev libxcb-xinerama0 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-keysyms1-dev libxcb-shape0`
-* if meikipop is running, but doesn't show any popups, make sure to test lookups on a windowed xwayland application like steam
+* if ankipop is running, but doesn't show any popups, make sure to test lookups on a windowed xwayland application like steam
 * ask your favorite llm for help
 </details>
 
 ## how to use
 
-1.  run the application (`meikipop`, or `meikipop.exe` if you built one).
+1.  run the application (`ankipop`, or `ankipop.exe` if you built one).
 2.  the first time you run the app in `region` mode, you will be prompted to select an area of your screen to scan.
 3.  move your mouse over any japanese text on your screen.
 4.  a popup with dictionary entries will appear.
@@ -166,7 +166,7 @@ all of them can be changed in the settings. the new hotkeys accept combinations 
 
 good to know:
 
-* the first card creates a `meikipop` note type. if a later version of ankipop adds a field to it and you sync with ankiweb, anki may ask for a one-way sync once; choose **upload** on the computer you mine on.
+* the first card creates an `ankipop` note type. if a later version of ankipop adds a field to it and you sync with ankiweb, anki may ask for a one-way sync once; choose **upload** on the computer you mine on.
 * the ✓ marks are remembered until you restart ankipop, so a note you delete in anki keeps its ✓ until then.
 * duplicates are checked by the written word, so two readings of the same kanji can't become two separate cards. add them together instead (`alt+a` without picking).
 
@@ -185,11 +185,11 @@ word lookups, the ✓ marks and furigana work entirely offline.
 you can fully customize ankipop's behavior and appearance. right-click the tray icon and choose "settings" to open the configuration gui. the anki options and hotkeys live on the **anki** tab, the translate hotkey on the **general** tab.
 
 changes are saved to a platform-specific user data directory which contains `config.ini` and `dictionary.pkl`:
-- windows: `%LOCALAPPDATA%\meikipop\`
-- linux: `~/.config/meikipop/`
-- macos: `~/Library/Application Support/meikipop/`
+- windows: `%LOCALAPPDATA%\ankipop\`
+- linux: `~/.config/ankipop/`
+- macos: `~/Library/Application Support/ankipop/`
 
-ankipop uses the same folder as meikipop, so your settings and dictionary carry over.
+the first time ankipop starts, it copies your settings and dictionary from meikipop's folder, if you have one. after that the two apps keep separate settings, so both can be installed side by side.
 
 ## using alternative ocr backends...
 
@@ -202,7 +202,7 @@ meikipop's architecture allows you to choose whatever ocr suits your use case be
 
 ### ...via owocr provider
 
-owocr lets you run any relevant ocr engine and lets meikipop use it. just run a local [owocr](https://github.com/AuroraWright/owocr/tree/master/owocr) instance and select the owocr ocr provider from meikipop's system tray menu.
+owocr lets you run any relevant ocr engine and lets ankipop use it. just run a local [owocr](https://github.com/AuroraWright/owocr/tree/master/owocr) instance and select the owocr ocr provider from ankipop's system tray menu.
 
 make sure you:
 
@@ -226,18 +226,18 @@ for a complete guide, see: [how to create a custom ocr provider](docs/CUSTOM_OCR
 in case you want to update your dictionary you can simply run:
 
 ```bash
-meikipop build-dict
+ankipop build-dict
 ```
 
 if you want to import a yomitan dictionary that is possible as well. you can import multiple yomitan dictionaries at once, but be aware that this will overwrite your default dictionary:
 
 ```bash
 # try to keep as much of the dictionary's original formatting
-meikipop import-yomitan-dict-html my_yomitan_dict.zip
+ankipop import-yomitan-dict-html my_yomitan_dict.zip
 # or create a compact, text only dictionary
-meikipop import-yomitan-dict-text my_yomitan_dict.zip
+ankipop import-yomitan-dict-text my_yomitan_dict.zip
 # or import multiple dictionaries at once
-meikipop import-yomitan-dict-text dict1.zip dict2.zip
+ankipop import-yomitan-dict-text dict1.zip dict2.zip
 ```
 
 ## running the tests

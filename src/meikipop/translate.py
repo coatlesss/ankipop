@@ -54,7 +54,7 @@ class SentenceTranslator:
         try:
             self.listener = keyboard.GlobalHotKeys({to_pynput_hotkey(config.translate_hotkey): self._on_hotkey})
             self.listener.start()
-            logger.info(f"Translate: press '{config.translate_hotkey}' to translate the sentence under the mouse.")
+            logger.debug(f"Translate: press '{config.translate_hotkey}' to translate the sentence under the mouse.")
         except ValueError:
             logger.error(f"Translate: invalid hotkey '{config.translate_hotkey}'. Use e.g. 'alt+t', 'ctrl+shift+t' or 'f9'.")
 

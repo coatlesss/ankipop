@@ -27,7 +27,7 @@ JPOD_URL = 'https://assets.languagepod101.com/dictionary/japanese/audiomp3.php'
 JPOD_MISSING_MD5 = '7e2c2f954ef6051373ba916f000168dc'  # jpod's "this audio is not available" clip
 JPOD_HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'}  # jpod answers 403 to non-browser user agents
 
-MODEL_NAME = 'meikipop'
+MODEL_NAME = 'ankipop'
 FIELDS = ['Word', 'Reading', 'Meaning', 'Sentence', 'SentenceMeaning', 'Picture', 'Audio', 'Frequency', 'Context']
 FRONT = '<div class="word">{{Word}}</div>'
 BACK = """{{FrontSide}}
@@ -179,7 +179,7 @@ class AnkiExporter(QObject):
                 to_pynput_hotkey(config.anki_select_hotkey): self.popup_window.select_next_entry,
             })
             self.listener.start()
-            logger.info(f"Anki: press '{config.anki_hotkey}' to add the word in the popup to deck '{config.anki_deck}', "
+            logger.debug(f"Anki: press '{config.anki_hotkey}' to add the word in the popup to deck '{config.anki_deck}', "
                         f"'{config.anki_select_hotkey}' to pick a different entry.")
         except ValueError:
             logger.error(f"Anki: invalid hotkey '{config.anki_hotkey}' or '{config.anki_select_hotkey}'. "
