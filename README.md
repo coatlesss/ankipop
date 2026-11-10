@@ -1,16 +1,16 @@
-# meikifork - meikipop with anki cards and sentence translation
+# ankipop - meikipop with anki cards and sentence translation
 
-meikifork is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
+ankipop is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
 
 https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
-> meikifork is a modified version of [meikipop](https://github.com/rtr46/meikipop) by rtr46, based on meikipop 2.0.6 and changed starting november 2026. the changes are listed under [what this fork adds](#what-this-fork-adds).
+> ankipop is a modified version of [meikipop](https://github.com/rtr46/meikipop) by rtr46, based on meikipop 2.0.6 and changed starting november 2026. the changes are listed under [what this fork adds](#what-this-fork-adds).
 
 ## what this fork adds
 
 ### anki cards
 
-* **one key to make a card:** hover a word and press `alt+a`. meikifork talks to anki through the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on and creates the card in the background.
+* **one key to make a card:** hover a word and press `alt+a`. ankipop talks to anki through the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on and creates the card in the background.
 * **cards come filled in:**
   * the word, its reading and its meaning
   * the sentence you were actually reading, with the word in bold
@@ -44,7 +44,7 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
 ## philosophy & limitations
 
-meikipop is designed to do one thing and do it exceptionally well: provide fast, frictionless, on-screen dictionary lookups. meikifork keeps that focus and adds the two things that come right after a lookup: saving the word and understanding the whole sentence.
+meikipop is designed to do one thing and do it exceptionally well: provide fast, frictionless, on-screen dictionary lookups. ankipop keeps that focus and adds the two things that come right after a lookup: saving the word and understanding the whole sentence.
 
 meikipop is heavily inspired by the philosophy of [Nazeka](https://github.com/wareya/nazeka), a fantastic browser-based popup dictionary, and aims to bring that seamless experience to the entire desktop. it also draws inspiration from the ocr architecture of [owocr](https://github.com/AuroraWright/owocr/tree/master/owocr).
 
@@ -56,15 +56,15 @@ a few things to keep in mind:
 
 ## installation
 
-there are no prebuilt downloads for meikifork yet, so you run it from source or build the .exe yourself. note that when meikifork is started for the first time, a dictionary and ocr models may be downloaded.
+there are no prebuilt downloads for ankipop yet, so you run it from source or build the .exe yourself. note that when ankipop is started for the first time, a dictionary and ocr models may be downloaded.
 
 ### run from source
 
 you need python 3.10+.
 
 ```bash
-git clone https://github.com/coatlesss/meikifork.git
-cd meikifork
+git clone https://github.com/coatlesss/ankipop.git
+cd ankipop
 python -m venv .venv
 .venv\Scripts\activate        # windows; on linux/macos: source .venv/bin/activate
 pip install -e .
@@ -147,14 +147,14 @@ all of them can be changed in the settings. the new hotkeys accept combinations 
 
 1.  install [anki](https://apps.ankiweb.net) and open it.
 2.  in anki, go to **tools > add-ons > get add-ons**, enter `2055492159` ([AnkiConnect](https://ankiweb.net/shared/info/2055492159)) and restart anki.
-3.  keep anki open while you use meikifork.
-4.  in meikifork, open **settings > anki**. the status line should say *connected to anki*. pick a deck from the dropdown, or type a new name to create one. press **refresh** after making a new deck in anki.
+3.  keep anki open while you use ankipop.
+4.  in ankipop, open **settings > anki**. the status line should say *connected to anki*. pick a deck from the dropdown, or type a new name to create one. press **refresh** after making a new deck in anki.
 5.  choose what goes on your cards: pronunciation audio, all meanings, frequency rank and sentence furigana.
 
 good to know:
 
-* the first card creates a `meikipop` note type. if a later version of meikifork adds a field to it and you sync with ankiweb, anki may ask for a one-way sync once; choose **upload** on the computer you mine on.
-* the ✓ marks are remembered until you restart meikifork, so a note you delete in anki keeps its ✓ until then.
+* the first card creates a `meikipop` note type. if a later version of ankipop adds a field to it and you sync with ankiweb, anki may ask for a one-way sync once; choose **upload** on the computer you mine on.
+* the ✓ marks are remembered until you restart ankipop, so a note you delete in anki keeps its ✓ until then.
 * duplicates are checked by the written word, so two readings of the same kanji can't become two separate cards. add them together instead (`alt+a` without picking).
 
 ## online services
@@ -169,14 +169,14 @@ word lookups, the ✓ marks and furigana work entirely offline.
 
 ## configuration
 
-you can fully customize meikifork's behavior and appearance. right-click the tray icon and choose "settings" to open the configuration gui. the anki options and hotkeys live on the **anki** tab, the translate hotkey on the **general** tab.
+you can fully customize ankipop's behavior and appearance. right-click the tray icon and choose "settings" to open the configuration gui. the anki options and hotkeys live on the **anki** tab, the translate hotkey on the **general** tab.
 
 changes are saved to a platform-specific user data directory which contains `config.ini` and `dictionary.pkl`:
 - windows: `%LOCALAPPDATA%\meikipop\`
 - linux: `~/.config/meikipop/`
 - macos: `~/Library/Application Support/meikipop/`
 
-meikifork uses the same folder as meikipop, so your settings and dictionary carry over.
+ankipop uses the same folder as meikipop, so your settings and dictionary carry over.
 
 ## using alternative ocr backends...
 
@@ -239,4 +239,4 @@ python tests/test_furigana.py
 
 ## license
 
-meikifork is licensed under the GNU General Public License v3.0, the same license as meikipop. see the `LICENSE` file for the full license text. meikipop is © rtr46 and its contributors.
+ankipop is licensed under the GNU General Public License v3.0, the same license as meikipop. see the `LICENSE` file for the full license text. meikipop is © rtr46 and its contributors.
