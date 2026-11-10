@@ -1,12 +1,38 @@
-# meikipop - universal japanese ocr popup dictionary
+# meikifork - meikipop with anki cards and sentence translation
 
-instantly look up japanese words anywhere on your screen. meikipop uses optical character recognition (ocr) to read text from websites, games, scanned manga, or even hard-coded video subtitles, giving you effortless dictionary lookups with the press of a key (or even without)!
+meikifork is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
 
 https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
+> meikifork is a modified version of [meikipop](https://github.com/rtr46/meikipop) by rtr46, based on meikipop 2.0.6 and changed starting november 2026. the changes are listed under [what this fork adds](#what-this-fork-adds).
 
+## what this fork adds
 
-## features
+### anki cards
+
+* **one key to make a card:** hover a word and press `alt+a`. meikifork talks to anki through the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on and creates the card in the background.
+* **cards come filled in:**
+  * the word, its reading and its meaning
+  * the sentence you were actually reading, with the word in bold
+  * a screenshot of the scan area
+  * an example sentence with english translation from [tatoeba](https://tatoeba.org)
+  * pronunciation audio from japanesepod101 (optional)
+  * the word's frequency rank (optional)
+* **furigana on the sentence (optional):** readings over the kanji of the on-screen sentence, except the word you're learning, so the card still tests it.
+* **pick the right entry:** `alt+s` steps through the popup's entries (marked with ▶) and `alt+a` adds the marked one. without a pick, every reading of the word goes on one card (e.g. 角: かど・かく・つの・すみ).
+* **see what you already know:** words that already have a note in anki get a ✓ in the popup. this checks the first field of every note type, so cards made with other tools (e.g. lapis) count too.
+* **no setup in anki:** the first card creates a `meikipop` note type and the deck you chose. adding a word that's already in anki is caught, and every result shows up as a notification.
+
+### sentence translation
+
+* hover a sentence and press `alt+t`. the popup shows the sentence and its english translation (google translate) until you move to another word.
+
+### popups that don't cover the text
+
+* sentence translations sit above or below the text box instead of on top of it.
+* for vertical text (manga), word lookups and translations go beside the speech bubble (right side if there's room, since that part is already read) instead of covering the rest of the column.
+
+## features (from meikipop)
 
 *   **works everywhere:** if you can see it on your screen, you can look it up. no more limitations of browser extensions, hooks or application-specific tools.
 *   **ocr-powered:** reads japanese text directly from images, making it perfect for games, comics, and videos.
@@ -18,45 +44,51 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
 ## philosophy & limitations
 
-meikipop is designed to do one thing and do it exceptionally well: provide fast, frictionless, on-screen dictionary lookups.
+meikipop is designed to do one thing and do it exceptionally well: provide fast, frictionless, on-screen dictionary lookups. meikifork keeps that focus and adds the two things that come right after a lookup: saving the word and understanding the whole sentence.
 
-it is heavily inspired by the philosophy of [Nazeka](https://github.com/wareya/nazeka), a fantastic browser-based popup dictionary, and aims to bring that seamless experience to the entire desktop. it also draws inspiration from the ocr architecture of [owocr](https://github.com/AuroraWright/owocr/tree/master/owocr).
+meikipop is heavily inspired by the philosophy of [Nazeka](https://github.com/wareya/nazeka), a fantastic browser-based popup dictionary, and aims to bring that seamless experience to the entire desktop. it also draws inspiration from the ocr architecture of [owocr](https://github.com/AuroraWright/owocr/tree/master/owocr).
 
-to maintain this focus, there are a few things meikipop is **not**:
+a few things to keep in mind:
 
-*   **it is not an srs-mining tool.** meikipop does not include functionality to automatically create flashcards for programs like anki.
-*   **it is not a multi-dictionary tool.** while meikipops lets you import yomitan dictionaries, it is designed to run best with a single, semi-custom jmdict+kanjidic dictionary. 
+*   **anki support is deliberately simple.** one hotkey, one card layout. cards always use the `meikipop` note type; mapping onto your own note types isn't supported.
+*   **it is not a multi-dictionary tool.** while meikipop lets you import yomitan dictionaries, it is designed to run best with a single, semi-custom jmdict+kanjidic dictionary.
+*   **the new features are tested on windows.** the hotkeys use pynput and should work on linux (x11) and macos, but haven't been tried there.
 
 ## installation
 
-there are a few different ways to install and run meikipop. note that when meikipop is started for the first time, a dictionary and ocr models may be downloaded.
+there are no prebuilt downloads for meikifork yet, so you run it from source or build the .exe yourself. note that when meikifork is started for the first time, a dictionary and ocr models may be downloaded.
 
-### easiest: prepackaged binaries
+### run from source
 
-just download, unpack and start the executable binary. no python installation required:
-* https://github.com/rtr46/meikipop/releases/latest
-
-### recommended: install via pypi
-
-if you already have python 3.10+ installed, this is the most flexible option that lets you run directly from source, enables you to edit the program and lets you add your own custom ocr providers. 
+you need python 3.10+.
 
 ```bash
-#... activate your environment if any
-pip install --upgrade meikipop
-meikipop  # run the application
-```
-
-### for development: editable install
-
-if you are planning to modify, fork or contribute to meikipop, it is best to checkout this repo and create an editable install
-
-```bash
-#... activate your environment if any
-git clone https://github.com/rtr46/meikipop.git
-cd meikipop
+git clone https://github.com/coatlesss/meikifork.git
+cd meikifork
+python -m venv .venv
+.venv\Scripts\activate        # windows; on linux/macos: source .venv/bin/activate
 pip install -e .
-meikipop  # run the application
+meikipop                      # run the application
 ```
+
+if windows powershell says *running scripts is disabled on this system* when activating, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and try again.
+
+because this is an editable install, changes you make under `src/meikipop/` take effect the next time you start the app.
+
+### build a standalone .exe (windows)
+
+with the environment above activated:
+
+```bash
+pip install pyinstaller
+pyinstaller --noconfirm meikipop.win.x64.spec
+```
+
+the result is `dist\meikipop.exe`, a single file you can copy to any windows pc. quit a running meikipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
+
+### just want the original meikipop?
+
+the upstream project has [prebuilt binaries](https://github.com/rtr46/meikipop/releases/latest) and a pypi package (`pip install --upgrade meikipop`). neither includes the features of this fork.
 
 ### platform support
 
@@ -94,27 +126,64 @@ here are some tips and recommendations:
 
 ## how to use
 
-1.  run the application (`meikipop`).
+1.  run the application (`meikipop`, or `meikipop.exe` if you built one).
 2.  the first time you run the app in `region` mode, you will be prompted to select an area of your screen to scan.
 3.  move your mouse over any japanese text on your screen.
 4.  a popup with dictionary entries will appear.
 5.  **right-click the system tray icon** to open the settings, reselect the scan region, change the ocr provider or quit the application.
 
+### hotkeys
+
+| key | what it does |
+|-----|--------------|
+| `shift` | show the popup (only needed in manual scan mode, or with "show popup without hotkey" turned off) |
+| `alt+t` | translate the sentence under the mouse |
+| `alt+a` | add the word in the popup to anki |
+| `alt+s` | pick which popup entry `alt+a` adds (▶ marks it) |
+
+all of them can be changed in the settings. the new hotkeys accept combinations like `ctrl+shift+e` or single keys like `f8`. if `alt+a` or `alt+t` seems to do nothing, check the console window: every press is logged with what happened (e.g. *no popup is showing*).
+
+## setting up anki
+
+1.  install [anki](https://apps.ankiweb.net) and open it.
+2.  in anki, go to **tools > add-ons > get add-ons**, enter `2055492159` ([AnkiConnect](https://ankiweb.net/shared/info/2055492159)) and restart anki.
+3.  keep anki open while you use meikifork.
+4.  in meikifork, open **settings > anki**. the status line should say *connected to anki*. pick a deck from the dropdown, or type a new name to create one. press **refresh** after making a new deck in anki.
+5.  choose what goes on your cards: pronunciation audio, all meanings, frequency rank and sentence furigana.
+
+good to know:
+
+* the first card creates a `meikipop` note type. if a later version of meikifork adds a field to it and you sync with ankiweb, anki may ask for a one-way sync once; choose **upload** on the computer you mine on.
+* the ✓ marks are remembered until you restart meikifork, so a note you delete in anki keeps its ✓ until then.
+* duplicates are checked by the written word, so two readings of the same kanji can't become two separate cards. add them together instead (`alt+a` without picking).
+
+## online services
+
+on top of the ocr provider you choose, the new features use these services:
+
+* **google translate**, for `alt+t`. the sentence under your mouse is sent to google. this uses google's free, unofficial endpoint, which could be rate-limited or change.
+* **tatoeba**, for example sentences on cards. sentences are licensed [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/) by their tatoeba contributors.
+* **japanesepod101**, for pronunciation audio (can be turned off in settings > anki).
+
+word lookups, the ✓ marks and furigana work entirely offline.
+
 ## configuration
 
-you can fully customize meikipop's behavior and appearance. right-click the tray icon and choose "settings" to open the configuration gui.
+you can fully customize meikifork's behavior and appearance. right-click the tray icon and choose "settings" to open the configuration gui. the anki options and hotkeys live on the **anki** tab, the translate hotkey on the **general** tab.
 
 changes are saved to a platform-specific user data directory which contains `config.ini` and `dictionary.pkl`:
 - windows: `%LOCALAPPDATA%\meikipop\`
 - linux: `~/.config/meikipop/`
 - macos: `~/Library/Application Support/meikipop/`
 
+meikifork uses the same folder as meikipop, so your settings and dictionary carry over.
+
 ## using alternative ocr backends...
 
 meikipop's architecture allows you to choose whatever ocr suits your use case best:
 - meikiocr (default/local): possibly the fastest local ocr worth using on cpu and can run even faster on nvidia gpus. primarily designed for video games with horizontal text. poor accuracy for vertical text.
 - google lens (remote): high accuracy, but requires an internet connection and has higher latency then the local options.
-- chrome screen ai (local): alternative local ocr worth checking out if meikiocr does not fit your use case. requires additional setup ([instructions](https://github.com/rtr46/meikipop/releases/tag/v1.10.0))
+- chrome screen ai (local): alternative local ocr worth checking out if meikiocr does not fit your use case, e.g. for vertical manga text. requires additional setup ([instructions](https://github.com/rtr46/meikipop/releases/tag/v1.10.0))
 - owocr: owocr lets you choose from even more ocr backends (see below)
 - custom ocr provider: if you are running from source it is very simple to integrate any ocr provider on your own (see below) 
 
@@ -158,8 +227,16 @@ meikipop import-yomitan-dict-text my_yomitan_dict.zip
 meikipop import-yomitan-dict-text dict1.zip dict2.zip
 ```
 
+## running the tests
+
+the new features come with tests that don't need anki or an internet connection:
+
+```bash
+python tests/test_anki.py
+python tests/test_translate.py
+python tests/test_furigana.py
+```
+
 ## license
 
-meikipop is licensed under the GNU General Public License v3.0. see the `LICENSE` file for the full license text.
-
-
+meikifork is licensed under the GNU General Public License v3.0, the same license as meikipop. see the `LICENSE` file for the full license text. meikipop is © rtr46 and its contributors.
