@@ -84,7 +84,7 @@ pip install pyinstaller
 pyinstaller --noconfirm meikipop.win.x64.spec
 ```
 
-the result is `dist\meikipop.exe`, a single file you can copy to any windows pc. quit a running meikipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
+the result is `distnkipop.exe`, a single file you can copy to any windows pc. quit a running meikipop first, or the build can't overwrite the old .exe. after adding new non-python files (icons, json, a new ocr provider), list them in the `.spec` file too.
 
 ### just want the original meikipop?
 

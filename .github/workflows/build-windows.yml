@@ -35,11 +35,11 @@ jobs:
         run: pyinstaller meikipop.win.x64.spec
 
       - name: build windows archive
-        run: powershell -Command "Compress-Archive -Path dist/meikipop.exe -DestinationPath dist/meikipop.windows.x64.zip"
+        run: powershell -Command "Compress-Archive -Path dist/ankipop.exe -DestinationPath dist/ankipop.windows.x64.zip"
 
       - name: upload windows artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: meikipop-windows-x64
-          path: dist/meikipop.windows.x64.zip
+          name: ankipop-windows-x64
+          path: dist/ankipop.windows.x64.zip
