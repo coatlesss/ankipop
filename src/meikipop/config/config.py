@@ -35,6 +35,7 @@ class Config:
             'max_lookup_length': 25,
             'glens_low_bandwidth': False,
             'ocr_provider': 'meikiocr (local)',
+            'text_mode': 'normal',  # 'normal' or 'manga'
             'auto_scan_mode': True,
             'auto_scan_mode_lookups_without_hotkey': True,
             'auto_scan_interval_seconds': 0.5,

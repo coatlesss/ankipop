@@ -76,6 +76,18 @@ class TrayIcon(QSystemTrayIcon):
         auto_action.setChecked(config.auto_scan_mode)
         self.scan_mode_action_group.addAction(auto_action)
 
+        # Text Mode Selection
+        text_mode_menu = self.menu.addMenu("Text Mode")
+        self.text_mode_action_group = QActionGroup(self)
+        self.text_mode_action_group.setExclusive(True)
+        self.text_mode_action_group.triggered.connect(self._on_text_mode_selected)
+        for mode in ('normal', 'manga'):
+            action = text_mode_menu.addAction(mode.capitalize())
+            action.setCheckable(True)
+            action.setData(mode)
+            action.setChecked(config.text_mode == mode)
+            self.text_mode_action_group.addAction(action)
+
         # Scan Area Selection
         scan_area_menu = self.menu.addMenu("Scan Area")
         self.scan_area_action_group = QActionGroup(self)
@@ -152,6 +164,11 @@ class TrayIcon(QSystemTrayIcon):
             config.auto_scan_mode = is_auto
             config.save()
 
+    def _on_text_mode_selected(self, action: QAction):
+        if action.data() != config.text_mode:
+            config.text_mode = action.data()
+            config.save()
+
     def _on_scan_area_selected(self, action: QAction):
         selected_id = action.data()
         if selected_id == 'region':
@@ -187,6 +204,9 @@ class TrayIcon(QSystemTrayIcon):
             if is_auto_action == config.auto_scan_mode:
                 action.setChecked(True)
                 break
+
+        for action in self.text_mode_action_group.actions():
+            action.setChecked(action.data() == config.text_mode)
 
     def show_settings(self):
         settings_dialog = SettingsDialog(self.ocr_processor, self.popup_window, self.input_loop, self.lookup, self,

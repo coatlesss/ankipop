@@ -3,12 +3,15 @@ import logging
 import statistics
 from typing import List, Tuple
 
+from meikipop.config.config import config
 from meikipop.ocr.interface import Paragraph, Word, BoundingBox
 
 logger = logging.getLogger(__name__)
 
 FURIGANA_VERTICAL_WIDTH_THRESHOLD = 0.65
 FURIGANA_HORIZONTAL_HEIGHT_THRESHOLD = 0.65
+# measured on manga scans: furigana columns are 0.64-0.70x the median column width, text columns 0.85x or more
+MANGA_FURIGANA_VERTICAL_WIDTH_THRESHOLD = 0.8
 
 
 def _merge_bounding_boxes(boxes: List[BoundingBox]) -> BoundingBox:
@@ -94,6 +97,31 @@ def _merge_lines_into_paragraph(lines: List[Paragraph]) -> Paragraph:
     )
 
 
+def _drop_rows_across_columns(lines: List[Paragraph]) -> List[Paragraph]:
+    """
+    Manga mode: Chrome Screen AI often reads tightly packed vertical text a second time sideways, returning extra
+    horizontal "lines" that cut across the real columns (e.g. モ使そ from それで / 使える / モンか).
+    Drops horizontal lines whose characters mostly sit inside vertical lines, so lookups and translations use the columns.
+    shortcut: only removes rows that duplicate detected columns; if an engine ever returns the rows without the
+    columns, those rows would need to be rebuilt into columns instead.
+    """
+    columns = [line.box for line in lines if line.is_vertical]
+    if not columns:
+        return lines
+
+    def inside(b: BoundingBox, c: BoundingBox) -> bool:
+        return abs(b.center_x - c.center_x) <= c.width / 2 and abs(b.center_y - c.center_y) <= c.height / 2
+
+    def cuts_across_columns(line: Paragraph) -> bool:
+        hits = sum(any(inside(w.box, c) for c in columns) for w in line.words)
+        return hits * 2 > len(line.words)
+
+    kept = [line for line in lines if line.is_vertical or not line.words or not cuts_across_columns(line)]
+    if len(kept) < len(lines):
+        logger.debug(f"Dropped {len(lines) - len(kept)} horizontal lines that cut across vertical text.")
+    return kept
+
+
 # NEW FUNCTION TO DETECT FURIGANA
 def _classify_lines_by_size(
         lines: List[Paragraph]
@@ -119,7 +147,9 @@ def _classify_lines_by_size(
         widths = [p.box.width for p in vertical_lines]
         if len(widths) > 1:
             median_width = statistics.median(widths)
-            threshold = median_width * FURIGANA_VERTICAL_WIDTH_THRESHOLD
+            ratio = MANGA_FURIGANA_VERTICAL_WIDTH_THRESHOLD if config.text_mode == 'manga' \
+                else FURIGANA_VERTICAL_WIDTH_THRESHOLD
+            threshold = median_width * ratio
             for line in vertical_lines:
                 if line.box.width < threshold:
                     furigana_lines.append(line)
@@ -156,6 +186,9 @@ def group_lines_into_paragraphs(lines: List[Paragraph]) -> List[Paragraph]:
     """
     if not lines:
         return []
+
+    if config.text_mode == 'manga':
+        lines = _drop_rows_across_columns(lines)
 
     # Classify lines into main text and furigana
     main_lines, furigana_lines = _classify_lines_by_size(lines)

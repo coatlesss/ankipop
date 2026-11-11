@@ -87,6 +87,15 @@ class SettingsDialog(QDialog):
         self._set_expanding(self.ocr_provider_combo)
         core_layout.addRow("OCR Provider:", self.ocr_provider_combo)
 
+        self.text_mode_combo = QComboBox()
+        self.text_mode_combo.addItems(['Normal', 'Manga'])
+        self.text_mode_combo.setCurrentText(config.text_mode.capitalize())
+        self.text_mode_combo.setToolTip(
+            "Manga: for vertical text in speech bubbles. Ignores sideways misreads of the columns\n"
+            "and keeps furigana out of lookups and translations. Normal: everything else")
+        self._set_expanding(self.text_mode_combo)
+        core_layout.addRow("Text Mode:", self.text_mode_combo)
+
         # Google Lens specific option
         self.glens_compression_check_label = QLabel("Google Lens Compression:")
         self.glens_compression_check = QCheckBox()
@@ -521,6 +530,7 @@ class SettingsDialog(QDialog):
 
         # Update all other config values
         config.hotkey = self.hotkey_combo.currentText()
+        config.text_mode = self.text_mode_combo.currentText().lower()
         config.translate_hotkey = self.translate_hotkey_combo.currentText().strip().lower() or 'alt+t'
         config.glens_low_bandwidth = self.glens_compression_check.isChecked()
         config.max_lookup_length = self.max_lookup_spin.value()

@@ -29,6 +29,11 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
 * hover a sentence and press `alt+t`. the popup shows the sentence and its english translation (google translate) until you move to another word.
 
+### manga mode
+
+* switch with **text mode** in the tray menu or the settings. manga mode is for vertical text in speech bubbles: chrome screen ai sometimes also reads tightly packed columns sideways (e.g. モ使そ from それで / 使える / モンか), and manga mode ignores those misreads and keeps furigana out of lookups and translations.
+* normal mode behaves like meikipop and is the default; use it for games, websites and other horizontal text.
+
 ### popups that don't cover the text
 
 * sentence translations sit above or below the text box instead of on top of it.
