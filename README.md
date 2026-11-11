@@ -28,12 +28,15 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 ### sentence translation
 
 * hover a sentence and press `alt+t`. the popup shows the sentence and its english translation (google translate) until you move to another word.
-* **grammar explainer:** hover a sentence and press `alt+g`. the popup lists the grammar used in the sentence with its jlpt level and a short explanation, e.g. `〜てしまう N4 did it completely, or ended up doing it`. it works offline, so it keeps working when google translate is rate-limiting you.
-  * to also see the grammar under every `alt+t` translation, turn on **grammar with translation** under *settings > general > sentence translation & grammar*. it shows up right away, before the translation arrives.
-  * 212 grammar points from n5 to n1 (n5: 28, n4: 72, n3: 57, n2: 48, n1: 7), including casual and manga forms (〜ちゃう, 〜なきゃ, 〜じゃん, 〜っけ, 〜ぞ, 〜もん) and polite speech (尊敬語, 謙譲語, 〜ていただく). they're listed in `src/meikipop/grammar_points.py`.
-  * conjugated grammar (〜ている, 〜てしまう, causative, passive, 〜たい, ...) comes from the dictionary's deconjugator: each word is read the way the popup reads it, and the simplest valid reading is used. so contractions like 見てる count, while look-alikes like 捨てる or 育てた don't.
-  * fixed phrases (かもしれない, なければならない, わけにはいかない, ...) are matched as patterns. word-like ones (らしい, ので, まま) only count where a word starts, so 新しい, わがまま and なるほど don't trigger them.
-  * accuracy is measured with `python tests/grammar_eval.py`, which runs 280 hand-labeled sentences through the real dictionary. twice, a batch of new sentences was written after tuning and scored once before any fixes: 40 sentences gave 95% correct points (precision) and found 89% of the expected points (recall), and 25 more gave 95% and 97%. after fixing what those runs showed, all sets score 100%, but real text will have misses that none of them cover.
+
+### grammar explainer
+
+* **one key per sentence:** hover a sentence and press `alt+g`. the popup lists the grammar it uses, each with its jlpt level and a short explanation (e.g. `〜てしまう N4 did it completely, or ended up doing it`).
+* **212 grammar points, n5 to n1:** including casual and manga forms (〜ちゃう, 〜なきゃ, 〜じゃん, 〜ぞ) and polite speech (尊敬語, 謙譲語).
+* **works offline:** no internet needed, so it keeps working while google translate is rate-limiting you.
+* **with translations too (optional):** turn on **grammar with translation** in the settings to see the grammar under every `alt+t` translation.
+
+how it finds the grammar, and how accurate it is, is explained under [how the grammar explainer works](#how-the-grammar-explainer-works).
 
 ### manga mode
 
@@ -252,14 +255,32 @@ ankipop import-yomitan-dict-text my_yomitan_dict.zip
 ankipop import-yomitan-dict-text dict1.zip dict2.zip
 ```
 
+## how the grammar explainer works
+
+the grammar points live in `src/meikipop/grammar_points.py` (212 of them: n5 28, n4 72, n3 57, n2 48, n1 7) and are found in two ways:
+
+* **conjugations** (〜ている, 〜てしまう, causative, passive, 〜たい, ...) come from the dictionary's deconjugator. each word is read the way the popup reads it, and the simplest valid reading is used, so contractions like 見てる count while look-alikes like 捨てる or 育てた don't.
+* **fixed phrases** (かもしれない, なければならない, わけにはいかない, ...) are matched as patterns. word-like ones (らしい, ので, まま) only count where a word starts, so 新しい, わがまま and なるほど don't trigger them.
+
+accuracy is measured on 280 hand-labeled sentences, using the real dictionary:
+
+```bash
+python tests/grammar_eval.py
+```
+
+twice, a batch of new sentences was written after tuning and scored once before any fixes. the first batch (40 sentences) found 95% correct points (precision) and 89% of the expected points (recall), and the second (25 sentences) 95% and 97%. after fixing what those runs showed, every set scores 100%, but real text will have misses that none of them cover.
+
 ## running the tests
 
-the new features come with tests that don't need anki or an internet connection:
+the new features come with tests that don't need anki, the dictionary or an internet connection:
 
 ```bash
 python tests/test_anki.py
 python tests/test_translate.py
 python tests/test_furigana.py
+python tests/test_grammar.py
+python tests/test_postprocessing.py
+python tests/test_paths.py
 ```
 
 ## license
