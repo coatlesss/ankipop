@@ -33,7 +33,71 @@ def test_popup_placed_beside_text():
     assert x + size.width() <= 1450
 
 
+def test_rate_limit_shows_a_short_message_and_repeats_are_cached():
+    from unittest.mock import MagicMock, patch
+    import requests
+    from meikipop import translate as t
+
+    popup = MagicMock()
+    popup.get_latest_data.side_effect = lambda: popup.set_latest_data.call_args[0][0]
+    translator = t.SentenceTranslator.__new__(t.SentenceTranslator)  # skip the global hotkey listener
+    translator.popup_window, translator.lookup = popup, None
+
+    blocked = requests.Response()
+    blocked.status_code = 429
+    with patch.object(t.requests, 'get', return_value=blocked):
+        translator._translate_into_popup('雨だ。')
+    assert popup.set_latest_data.call_args[0][0][0].translation == t.RATE_LIMITED
+
+    ok = MagicMock()
+    ok.json.return_value = [[['It is raining.', '雨だ。']]]
+    with patch.object(t.requests, 'get', return_value=ok) as get:
+        assert t.translate('雨だ。') == 'It is raining.'
+        assert t.translate('雨だ。') == 'It is raining.'
+    assert get.call_count == 1  # the second press used the cache
+
+
+def test_grammar_hotkey_shows_only_grammar():
+    from unittest.mock import MagicMock, patch
+    from meikipop import translate as t
+    from meikipop.grammar_points import TEIRU
+
+    popup = MagicMock()
+    translator = t.SentenceTranslator.__new__(t.SentenceTranslator)  # skip the global hotkey listener
+    translator.popup_window, translator.lookup = popup, None
+    shown = lambda: popup.set_latest_data.call_args[0][0][0]
+
+    with patch.object(t, 'find_grammar', return_value=[TEIRU]), patch.object(t.requests, 'get') as get:
+        translator._grammar_into_popup('見てる。')
+    assert shown().translation == '' and shown().grammar == (TEIRU,)
+    assert not get.called  # no translation request
+
+    with patch.object(t, 'find_grammar', return_value=[]):
+        translator._grammar_into_popup('はい。')
+    assert shown().translation == t.NO_GRAMMAR
+
+
+def test_both_hotkeys_are_registered_unless_they_clash():
+    from unittest.mock import MagicMock, patch
+    from meikipop import translate as t
+
+    translator = t.SentenceTranslator.__new__(t.SentenceTranslator)
+    translator.listener = None
+    with patch.object(t.config, 'translate_hotkey', 'alt+t'), patch.object(t.config, 'grammar_hotkey', 'alt+g'), \
+            patch.object(t.keyboard, 'GlobalHotKeys') as hotkeys:
+        translator.reapply_settings()
+    assert set(hotkeys.call_args[0][0]) == {'<alt>+t', '<alt>+g'}
+    with patch.object(t.config, 'translate_hotkey', 'alt+t'), patch.object(t.config, 'grammar_hotkey', 'alt+t'), \
+            patch.object(t.keyboard, 'GlobalHotKeys') as hotkeys:
+        translator.listener = None
+        translator.reapply_settings()
+    assert set(hotkeys.call_args[0][0]) == {'<alt>+t'}  # same key twice: translation wins
+
+
 if __name__ == '__main__':
     test_sentence_at()
     test_popup_placed_beside_text()
+    test_rate_limit_shows_a_short_message_and_repeats_are_cached()
+    test_grammar_hotkey_shows_only_grammar()
+    test_both_hotkeys_are_registered_unless_they_clash()
     print('ok')

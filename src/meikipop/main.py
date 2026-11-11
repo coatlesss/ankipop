@@ -69,7 +69,7 @@ def run_gui():
     ocr_processor = OcrProcessor(shared_state, screen_manager)
     hit_scanner = HitScanner(shared_state, input_loop, screen_manager)
     anki_exporter = AnkiExporter(popup_window, screen_manager, shared_state, lookup)
-    sentence_translator = SentenceTranslator(popup_window, shared_state)
+    sentence_translator = SentenceTranslator(popup_window, shared_state, lookup)
     tray_icon = TrayIcon(screen_manager, ocr_processor, popup_window, input_loop, lookup, anki_exporter,
                          sentence_translator)
     anki_exporter.notify.connect(tray_icon.showMessage)

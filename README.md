@@ -28,6 +28,12 @@ https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 ### sentence translation
 
 * hover a sentence and press `alt+t`. the popup shows the sentence and its english translation (google translate) until you move to another word.
+* **grammar explainer:** hover a sentence and press `alt+g`. the popup lists the grammar used in the sentence with its jlpt level and a short explanation, e.g. `〜てしまう N4 did it completely, or ended up doing it`. it works offline, so it keeps working when google translate is rate-limiting you.
+  * to also see the grammar under every `alt+t` translation, turn on **grammar with translation** under *settings > general > sentence translation & grammar*. it shows up right away, before the translation arrives.
+  * 212 grammar points from n5 to n1 (n5: 28, n4: 72, n3: 57, n2: 48, n1: 7), including casual and manga forms (〜ちゃう, 〜なきゃ, 〜じゃん, 〜っけ, 〜ぞ, 〜もん) and polite speech (尊敬語, 謙譲語, 〜ていただく). they're listed in `src/meikipop/grammar_points.py`.
+  * conjugated grammar (〜ている, 〜てしまう, causative, passive, 〜たい, ...) comes from the dictionary's deconjugator: each word is read the way the popup reads it, and the simplest valid reading is used. so contractions like 見てる count, while look-alikes like 捨てる or 育てた don't.
+  * fixed phrases (かもしれない, なければならない, わけにはいかない, ...) are matched as patterns. word-like ones (らしい, ので, まま) only count where a word starts, so 新しい, わがまま and なるほど don't trigger them.
+  * accuracy is measured with `python tests/grammar_eval.py`, which runs 280 hand-labeled sentences through the real dictionary. twice, a batch of new sentences was written after tuning and scored once before any fixes: 40 sentences gave 95% correct points (precision) and found 89% of the expected points (recall), and 25 more gave 95% and 97%. after fixing what those runs showed, all sets score 100%, but real text will have misses that none of them cover.
 
 ### manga mode
 
@@ -156,6 +162,7 @@ here are some tips and recommendations:
 |-----|--------------|
 | `shift` | show the popup (only needed in manual scan mode, or with "show popup without hotkey" turned off) |
 | `alt+t` | translate the sentence under the mouse |
+| `alt+g` | explain the grammar of the sentence under the mouse |
 | `alt+a` | add the word in the popup to anki |
 | `alt+s` | pick which popup entry `alt+a` adds (▶ marks it) |
 

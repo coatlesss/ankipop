@@ -50,6 +50,7 @@ class SentenceTranslation:
     translation: str
     text_block: tuple = ()  # (left, right, top, bottom) edges of the translated text block, physical screen px
     is_vertical: bool = False
+    grammar: tuple = ()  # GrammarPoints found in the sentence
 
 
 class Lookup(threading.Thread):

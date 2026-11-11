@@ -31,6 +31,8 @@ class Config:
         'Settings': {
             'hotkey': 'shift',
             'translate_hotkey': 'alt+t',
+            'translate_grammar': False,
+            'grammar_hotkey': 'alt+g',
             'scan_region': 'region',
             'max_lookup_length': 25,
             'glens_low_bandwidth': False,

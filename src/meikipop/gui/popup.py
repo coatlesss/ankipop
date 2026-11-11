@@ -278,10 +278,14 @@ class Popup(QWidget):
 
             if isinstance(entry, SentenceTranslation):
                 max_ratio = max(max_ratio, len(entry.sentence) / self.header_chars_per_line,
-                                len(entry.translation) / self.def_chars_per_line)
+                                len(entry.translation) / self.def_chars_per_line,
+                                *(len(f'{g.name} {g.level} {g.meaning}') / self.def_chars_per_line for g in entry.grammar))
+                lines = ([html.escape(entry.translation)] if entry.translation else []) + [
+                    f'<span style="color: {config.color_highlight_reading};">{html.escape(g.name)}</span>'
+                    f' <span style="opacity:0.7;">{g.level}</span> {html.escape(g.meaning)}' for g in entry.grammar]
                 all_html_parts.append(
                     f'<span style="color: {config.color_highlight_word}; font-size:{config.font_size_header}px;">{html.escape(entry.sentence)}</span>'
-                    f'<br><span style="font-size:{config.font_size_definitions}px;">{html.escape(entry.translation)}</span>')
+                    f'<br><span style="font-size:{config.font_size_definitions}px;">{"<br>".join(lines)}</span>')
                 continue
 
             if isinstance(entry, KanjiEntry):

@@ -185,7 +185,7 @@ class SettingsDialog(QDialog):
         self.tab_general_layout.addWidget(behavior_group)
 
         # --- Group 4: Sentence Translation ---
-        translate_group = QGroupBox("Sentence Translation")
+        translate_group = QGroupBox("Sentence Translation & Grammar")
         translate_layout = QFormLayout()
         self.form_layouts.append(translate_layout)
 
@@ -197,7 +197,23 @@ class SettingsDialog(QDialog):
             "Translates the sentence under the mouse (Google Translate) and shows it in the popup\n"
             "Pick one or type your own, e.g. f9")
         self._set_expanding(self.translate_hotkey_combo)
-        translate_layout.addRow("Hotkey:", self.translate_hotkey_combo)
+        translate_layout.addRow("Translate Hotkey:", self.translate_hotkey_combo)
+
+        self.translate_grammar_check = QCheckBox()
+        self.translate_grammar_check.setChecked(config.translate_grammar)
+        self.translate_grammar_check.setToolTip(
+            "Also lists the sentence's grammar under its translation, with JLPT level and a short explanation")
+        translate_layout.addRow("Grammar with Translation:", self.translate_grammar_check)
+
+        self.grammar_hotkey_combo = QComboBox()
+        self.grammar_hotkey_combo.setEditable(True)
+        self.grammar_hotkey_combo.addItems(['alt+g', 'shift+alt+g', 'ctrl+alt+g', 'ctrl+shift+alt+g'])
+        self.grammar_hotkey_combo.setCurrentText(config.grammar_hotkey)
+        self.grammar_hotkey_combo.setToolTip(
+            "Shows just the grammar of the sentence under the mouse (works offline, no translation)\n"
+            "Pick one or type your own, e.g. f10")
+        self._set_expanding(self.grammar_hotkey_combo)
+        translate_layout.addRow("Grammar Hotkey:", self.grammar_hotkey_combo)
 
         translate_group.setLayout(translate_layout)
         self.tab_general_layout.addWidget(translate_group)
@@ -532,6 +548,8 @@ class SettingsDialog(QDialog):
         config.hotkey = self.hotkey_combo.currentText()
         config.text_mode = self.text_mode_combo.currentText().lower()
         config.translate_hotkey = self.translate_hotkey_combo.currentText().strip().lower() or 'alt+t'
+        config.translate_grammar = self.translate_grammar_check.isChecked()
+        config.grammar_hotkey = self.grammar_hotkey_combo.currentText().strip().lower() or 'alt+g'
         config.glens_low_bandwidth = self.glens_compression_check.isChecked()
         config.max_lookup_length = self.max_lookup_spin.value()
         config.auto_scan_mode = self.auto_scan_check.isChecked()
