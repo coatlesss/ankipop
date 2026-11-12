@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>AnkiPop — Japanese OCR Popup Dictionary for Manga, Games & Anki</title>
+  <meta name="description" content="Free, open-source Japanese screen OCR dictionary. Look up manga, visual novel, game and video text, translate sentences, explain JLPT grammar, and create Anki flashcards in one key.">
+  <link rel="canonical" href="https://coatlesss.github.io/ankipop/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AnkiPop — Japanese OCR Dictionary + Anki Cards">
+  <meta property="og:description" content="Look up Japanese anywhere on your screen. Make Anki flashcards, translate sentences, and get grammar explanations while reading manga, games, and subtitles.">
+  <meta property="og:url" content="https://coatlesss.github.io/ankipop/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AnkiPop",
+    "url": "https://coatlesss.github.io/ankipop/",
+    "description": "Open-source Japanese screen OCR popup dictionary with AnkiConnect flashcard creation, sentence translation, offline JLPT grammar explanation, and a manga mode.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Windows, macOS, Linux",
+    "isAccessibleForFree": true,
+    "license": "https://github.com/coatlesss/ankipop/blob/main/LICENSE",
+    "downloadUrl": "https://github.com/coatlesss/ankipop/releases/latest",
+    "softwareHelp": "https://github.com/coatlesss/ankipop/blob/main/README.md",
+    "author": { "@type": "Person", "name": "coatlesss" }
+  }
+  </script>
+  <style>
+    :root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color-scheme:dark; background:#0e1320; color:#f1f5f9; }
+    * {box-sizing:border-box} body{margin:0;line-height:1.6} a{color:#b8c9ff}
+    .wrap{max-width:1050px;margin:auto;padding:0 24px} header{border-bottom:1px solid #2b3447;padding:17px 0} header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;color:white;text-decoration:none}
+    nav a{margin-left:16px;text-decoration:none;font-size:.92rem}
+    .hero{padding:92px 0 70px;background:radial-gradient(circle at 80% 10%,#263669 0%,transparent 45%)}
+    .eyebrow{color:#a9bdf5;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+    h1{font-size:clamp(2.3rem,5vw,4.2rem);max-width:780px;line-height:1.12;letter-spacing:-.045em;margin:16px 0}
+    .lead{font-size:1.16rem;color:#cbd5e1;max-width:740px}
+    .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.button{display:inline-block;background:#819cff;color:#101828;padding:12px 18px;border-radius:10px;font-weight:700;text-decoration:none}.button.secondary{background:#25304a;color:white;border:1px solid #53607c}
+    section{padding:50px 0} h2{font-size:1.8rem;line-height:1.2;margin:0 0 22px} h3{margin:0 0 8px;font-size:1.1rem}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .tile{background:#171e2e;border:1px solid #303a50;border-radius:14px;padding:24px}
+    .tile p{margin-bottom:0;color:#c8d1df}
+    kbd{background:#303c57;border:1px solid #637397;border-radius:5px;padding:2px 6px;font-size:.85em}
+    .steps{padding-left:1.4rem;color:#d1d9e8}.steps li{margin:10px 0}
+    details{border-bottom:1px solid #323c51;padding:14px 0}summary{font-weight:700;cursor:pointer} details p{color:#cad3e1}
+    .note{color:#9eadc5;font-size:.93rem;max-width:780px}
+    footer{padding:30px 0;border-top:1px solid #2b3447;color:#a5b4ca;font-size:.9rem}
+    @media(max-width:650px){.grid{grid-template-columns:1fr}.hero{padding:62px 0 48px}nav a{margin-left:10px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a class="brand" href="https://github.com/coatlesss/ankipop">AnkiPop</a><nav aria-label="Primary"><a href="#features">Features</a><a href="#setup">Get started</a><a href="https://github.com/coatlesss/ankipop">GitHub</a></nav></div></header>
+  <main>
+    <div class="hero"><div class="wrap">
+      <div class="eyebrow">Free and open source · Japanese immersion tools</div>
+      <h1>Read Japanese anywhere on your screen.</h1>
+      <p class="lead">AnkiPop is a Japanese OCR popup dictionary for manga, visual novels, games, websites and hardcoded video subtitles. Look up words, translate sentences, learn grammar, and make Anki flashcards without retyping what you see.</p>
+      <div class="buttons">
+        <a class="button" href="https://github.com/coatlesss/ankipop/releases/latest">Download AnkiPop</a>
+        <a class="button secondary" href="https://github.com/coatlesss/ankipop#how-to-use">Read documentation</a>
+      </div>
+      <p class="note">Downloads are available for Windows, macOS and Linux. New fork features have been tested primarily on Windows.</p>
+    </div></div>
+    <section id="features"><div class="wrap"><h2>Built for Japanese reading and immersion</h2>
+      <div class="grid">
+        <article class="tile"><h3>Screen OCR dictionary</h3><p>Hover Japanese text in games, manga, browser pages, or video subtitles to get quick lookups, even when the text isn't selectable.</p></article>
+        <article class="tile"><h3>One-key Anki cards</h3><p>With AnkiConnect running, press <kbd>Alt+A</kbd> to save a word with reading, meaning, sentence context and optional screenshot or audio.</p></article>
+        <article class="tile"><h3>Sentence translation</h3><p>Press <kbd>Alt+T</kbd> to translate a Japanese sentence using Google Translate. This feature requires an internet connection.</p></article>
+        <article class="tile"><h3>Japanese grammar help</h3><p>Press <kbd>Alt+G</kbd> for offline explanations of recognized grammar patterns from JLPT N5 through N1.</p></article>
+        <article class="tile"><h3>Manga mode</h3><p>Switch to a mode designed for vertical speech bubbles, with popups that avoid covering the rest of the text.</p></article>
+        <article class="tile"><h3>Across desktop apps</h3><p>Screen-based OCR can work with visual novels, emulators, websites, videos, and other windows. Accuracy depends on the OCR backend and text layout.</p></article>
+      </div></div></section>
+    <section id="setup"><div class="wrap"><h2>Get started</h2>
+      <ol class="steps">
+        <li><a href="https://github.com/coatlesss/ankipop/releases/latest">Download the latest release</a> for your operating system and follow the <a href="https://github.com/coatlesss/ankipop#installation">installation instructions</a>.</li>
+        <li>Start AnkiPop and let it download its first-run dictionary and OCR models.</li>
+        <li>Hover over Japanese text to see definitions. Use <kbd>Alt+T</kbd> to translate and <kbd>Alt+G</kbd> to explain grammar.</li>
+        <li>To create cards, install <a href="https://apps.ankiweb.net/">Anki</a> and <a href="https://ankiweb.net/shared/info/2055492159">AnkiConnect</a>, then press <kbd>Alt+A</kbd> over a word.</li>
+      </ol>
+      <p class="note">AnkiPop does not require an account for local dictionary lookups. Online translation and optional card extras use external services; see the README for details.</p>
+    </div></section>
+    <section id="faq"><div class="wrap"><h2>Frequently asked questions</h2>
+      <details><summary>Can AnkiPop read Japanese text from manga images?</summary><p>Yes. It uses OCR to read Japanese text visible on screen, including manga images. Manga mode is designed for vertical text. Results vary with image quality and OCR settings.</p></details>
+      <details><summary>Can I use it for Japanese games and visual novels?</summary><p>Yes. The screen OCR dictionary is intended for text visible across desktop applications, including games and visual novels, without requiring text hooks.</p></details>
+      <details><summary>Does it automatically create Anki cards?</summary><p>Cards are created when you press <kbd>Alt+A</kbd> over a selected word. You'll need Anki and the AnkiConnect add-on running.</p></details>
+      <details><summary>Does it work offline?</summary><p>After first-run setup, dictionary lookups and local grammar explanations work offline. Google Translate sentence translation requires a network connection.</p></details>
+      <details><summary>How is AnkiPop related to MeikiPop?</summary><p>AnkiPop is a GPL-3.0 fork of <a href="https://github.com/rtr46/meikipop">MeikiPop</a>, adding integrated Anki cards, sentence translation, grammar explanation, and manga-specific improvements.</p></details>
+    </div></section>
+  </main>
+  <footer><div class="wrap">AnkiPop is an independent open-source fork of <a href="https://github.com/rtr46/meikipop">MeikiPop</a> by rtr46 and contributors. Licensed under <a href="https://github.com/coatlesss/ankipop/blob/main/LICENSE">GPL-3.0</a>. <a href="https://github.com/coatlesss/ankipop/issues">Report an issue</a>.</div></footer>
+</body>
+</html>
