@@ -1,12 +1,25 @@
-# ankipop - meikipop with anki cards and sentence translation
+# AnkiPop — Japanese OCR Popup Dictionary for Manga, Games, Videos & Anki
 
-ankipop is a fork of [meikipop](https://github.com/rtr46/meikipop), the universal japanese ocr popup dictionary. it keeps everything meikipop does (look up japanese words anywhere on your screen: websites, games, scanned manga, hard-coded video subtitles) and adds one-key anki cards and sentence translation.
+**Read Japanese anywhere on your screen, translate sentences, and save words straight to Anki.**
 
-**[download](https://github.com/coatlesss/ankipop/releases/latest)** (windows, macos, linux) · [what this fork adds](#what-this-fork-adds) · [setting up anki](#setting-up-anki)
+AnkiPop is a **free, open-source Japanese screen OCR dictionary** for reading manga, visual novels, games, websites, and hardcoded video subtitles. Hover over visible Japanese text for instant dictionary lookups; press a hotkey to translate a sentence, explain its grammar, or make an Anki flashcard with the word, reading, meaning, context, and optional screenshot.
+
+AnkiPop is a fork of [MeikiPop](https://github.com/rtr46/meikipop), keeping its fast, system-wide popup dictionary while adding one-key Anki cards, sentence translation, offline JLPT grammar explanations, and a dedicated mode for vertical manga text.
+
+**[Download AnkiPop (latest release)](https://github.com/coatlesss/ankipop/releases/latest)** · [Installation](#installation) · [Anki setup](#setting-up-anki) · [Features added by this fork](#what-this-fork-adds) · [FAQ](#frequently-asked-questions)
+
+| If you want to… | AnkiPop can help |
+| --- | --- |
+| Read untranslated Japanese manga or visual novels | Look up text directly on screen; manga mode handles vertical text |
+| Understand Japanese subtitles or game dialogue | Use OCR popups and translate the sentence under your cursor |
+| Make Japanese Anki cards while immersing | Hover a word and press `Alt+A` (with AnkiConnect installed) |
+| Study unfamiliar JLPT grammar | Press `Alt+G` for local N5–N1 grammar explanations |
+
+**Platforms:** Windows, macOS, and Linux builds are available. New fork features have been tested primarily on Windows; other-platform behavior may vary. The first launch downloads the dictionary and OCR models.
 
 https://github.com/user-attachments/assets/a1834197-3059-438c-a2dc-716e8ec9078f
 
-> ankipop is a modified version of [meikipop](https://github.com/rtr46/meikipop) by rtr46, based on meikipop 2.0.6 and changed starting november 2026. the changes are listed under [what this fork adds](#what-this-fork-adds).
+> **Credit:** AnkiPop is based on [MeikiPop](https://github.com/rtr46/meikipop) 2.0.6 by rtr46 and contributors, with changes beginning in November 2026. See [what this fork adds](#what-this-fork-adds), and the [GPL-3.0 license](LICENSE).
 
 ## what this fork adds
 
@@ -57,6 +70,28 @@ how it finds the grammar, and how accurate it is, is explained under [how the gr
 *   **highly customizable:** change the hotkey, theme, colors, and layout to create your perfect reading experience.
 *   **region or fullscreen:** scan your entire screen or select a specific region (like a game window or manga page) to improve performance.
 *   **pluggable ocr backend:** lets you choose whatever ocr suits you best. whether you want the highest accuracy remote ocr, that runs great even on low-end hardware or you want blazingly fast and private local ocr.
+
+## frequently asked questions
+
+### Can I translate Japanese manga, game text, or video subtitles without copying the text?
+
+Yes. AnkiPop uses screen OCR to look up Japanese text visible in other applications, including scanned manga, games, websites, and hardcoded subtitles. OCR quality depends on the text, layout, and selected backend. For vertical manga dialogue, switch to **manga mode**.
+
+### Can I create Anki flashcards directly from Japanese text on screen?
+
+Yes. With [Anki](https://apps.ankiweb.net/) and [AnkiConnect](https://ankiweb.net/shared/info/2055492159) installed and running, hover over a word and press `Alt+A`. Cards can include the word, reading, meaning, sentence context, screenshot, and optional extras. See [setting up Anki](#setting-up-anki).
+
+### Does AnkiPop explain Japanese grammar or only translate?
+
+Both. `Alt+T` displays a sentence translation using Google Translate. `Alt+G` gives an offline explanation of recognized grammar patterns across JLPT N5–N1. Grammar recognition is heuristic and may miss constructions or make mistakes.
+
+### Is AnkiPop free? Do I need an account or an internet connection?
+
+AnkiPop is free and open source under GPL-3.0. Local dictionary lookups and grammar explanations work offline after setup. The first launch downloads models and dictionary data; Google Translate sentence translation and some optional card extras require online services.
+
+### Is AnkiPop the same as MeikiPop or a browser extension?
+
+AnkiPop is a **MeikiPop fork**, not a browser-only extension. Its screen-based approach can work across many desktop applications. The main additions are AnkiConnect card creation, sentence translation, grammar help, and manga-specific popup behavior.
 
 ## philosophy & limitations
 
